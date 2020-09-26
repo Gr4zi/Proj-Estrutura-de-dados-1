@@ -1,0 +1,225 @@
+# include  < iostream >
+# include  < unistd.h >
+using  namespace  std ;
+
+struct  Funcionario
+{
+	int prontuario;
+	nome da string;
+	duplo salário;
+	struct  Funcionario * ant;
+};
+
+Funcionario * init ()
+{
+	return  NULL ;
+}
+/ *
+int isEmpty (Lista * lista)
+{
+	return (lista == NULL);
+} * /
+
+Funcionario * insert (Funcionario * func, int prontuario, string nome, double salario)
+{
+	Funcionario * novo = novo Funcionario;
+	Novo-> prontuario = prontuario;
+	novo-> nome = nome;
+	novo-> salario = salario;
+	novo-> ant = func;
+	return novo;
+}
+
+void  print (Funcionario * func)
+{
+	int cont = 1 ;
+	Funcionario * aux;
+	aux = func;
+	if (aux! = NULL ) {
+		enquanto (aux! = NULL )
+		{
+			cout << " ------------------------------ " << endl;
+			cout << " Funcioário " << cont << endl;
+			cout << " ------------------------------ " << endl;
+			cout << " Nome: " << aux-> nome << endl;
+			cout << " Prontuario: " << aux-> prontuario << endl;
+			cout << " Salario: " << aux-> salario << endl << endl ;
+			aux = aux-> ant ;
+			cont ++;
+		}
+	} else {
+		cout << endl << " Nenhum funcionário para ser aplicação! " << endl << endl;
+	}
+}
+
+bool  validarProntuario (Funcionario * func, int prontuario)
+{
+	int contDuplic = 0 ;
+	Funcionario * aux;
+	aux = func;
+	enquanto (aux! = NULL )
+	{
+		if (aux-> prontuario == prontuario) {
+			contDuplic ++;
+		}
+		aux = aux-> ant ;
+	}
+	
+	return (contDuplic == 0 )? verdadeiro : falso ;
+		
+}
+
+Funcionario * find (Funcionario * func, int pront)
+{
+	Funcionario * aux;
+	aux = func;
+	while (aux! = NULL && aux-> prontuario ! = pront)
+	{
+		aux = aux-> ant ;
+	}
+	return aux;
+}
+
+Funcionario * remove (Funcionario * func, int pront)
+{
+	Funcionario * formiga = NULL ;
+	Funcionario * aux;
+	
+	aux = func;
+	while (aux! = NULL && aux-> prontuario ! = pront)
+	{
+		formiga = aux;
+		aux = aux-> ant ;
+	}
+	if (aux == NULL )
+	{
+		return func;
+	}
+	if (ant == NULL ) // era primeiro
+	{
+		func = aux-> ant ;
+	}
+	else  // estava no meio
+	{
+		formiga-> formiga = aux-> formiga ;
+	}
+	livre (aux);
+	return func;
+}
+
+void  freeList (Funcionario * func)
+{
+	Funcionario * aux;
+	aux = func;
+	enquanto (aux! = NULL )
+	{
+		Funcionario * ant = aux-> ant ;
+		livre (aux);
+		aux = formiga;
+	}
+}
+
+int  main ( int argc, char ** argv)
+{
+	setlocale (LC_ALL, " português " );	
+	int opcao, prontuario;
+	duplo salário;
+	nome da string;
+	
+	Funcionario * funcionario;
+	funcionario = init ();
+	
+	faça {
+		cout << " 0. Sair " << endl;
+		cout << " 1. Incluir " << endl;
+		cout << " 2. Excluir " << endl;
+		cout << " 3. Pesquisar " << endl;
+		cout << " 4. Listar " << endl;
+		
+		cout << " ==> " ;
+		cin >> opcao;
+		
+		switch (opcao) {
+			caso  0 :
+				cout << endl << " Programa encerrado! " ;
+				pausa ;
+			caso  1 : // Inclusão de funcionários
+			{
+				cout << endl;
+				cout << " INCLUSÃO DE FUNCIONÁRIO " << endl;
+				cout << " Nome: " ;
+				cin >> nome;
+				cout << " Prontuário: " ;
+				cin >> prontuario;
+				cout << " Salário: R $ " ;
+				cin >> salario;
+				
+				bool eValido = validarProntuario (funcionario, prontuario);
+				
+				if (eValido) {
+					funcionario = inserir (funcionario, prontuario, nome, salario);
+					cout << endl << " Inclusão realizada com sucesso! " << endl << endl;	
+				} else {
+					cout << endl << " O prontuário inserido já existe, tente novamente com outro! " << endl << endl;
+				}
+				sono ( 1,5 );
+				pausa ;	
+			}
+			caso  2 : // Deleção de uma funcionário
+			{
+				int prontBusca;
+				cout << endl;
+				cout << " EXCLUSÃO DE FUNCIONÁRIO " << endl;
+				cout << " Informe o número do prontuário: " ;
+				cin >> prontBusca;
+				
+				Funcionario * aux;
+				aux = remove (funcionario, prontBusca);
+				if (funcionario! = aux) { // se for diferente, houve mudança na lista
+					cout << endl << " Funcionário excluído com sucesso! " << endl << endl;
+					funcionario = aux;
+				} else {
+					cout << endl << " Nenhum funcionário encontrado com esse prontuário! " << endl << endl;
+				}
+				sono ( 1,5 );
+				pausa ;	
+			}
+			case  3 : // Pesquisa de funcionários pelo prontuário
+			{
+				int prontBusca;
+				cout << endl;
+				cout << " PESQUISA POR FUNCIONÁRIO " << endl;
+				cout << " Informe o número do prontuário: " ;
+				cin >> prontBusca;
+				
+				Funcionario * aux;
+				aux = find (funcionario, prontBusca);
+				
+				cout << endl;
+				if (aux! = NULL ) {					
+					cout << " Nome: " << aux-> nome << endl;
+					cout << " Prontuário: " << aux-> prontuario << endl;
+					cout << " Salário: " << aux-> salario << endl ;	
+				} else {
+					cout << " Nenhum funcionário encontrado com esse prontuário! " ;
+				}				
+				cout << endl << endl;
+				sono ( 1,5 );
+				pausa ;
+			}
+			case  4 : // Listar funcionários
+				cout << endl << " LISTAGEM DE FUNCIOÁRIOS " << endl;
+				imprimir (funcionario);
+				sono ( 1,5 );
+				pausa ;
+			padrão :
+				cout << " Opção inválida, tente novamente! " << endl << endl;
+				sono ( 1,5 );
+				pausa ;
+		}
+	} enquanto (opcao! = 0 );
+	
+	freeList (funcionario);
+	
+	return  0 ;
+}
